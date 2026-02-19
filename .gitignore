@@ -45,3 +45,8 @@ Thumbs.db
 backend/uploads/
 tmp/
 
+# Documentation files
+run_instructions.md
+understanding.md
+understanding_faang.md
+
