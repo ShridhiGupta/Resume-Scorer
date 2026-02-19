@@ -1,0 +1,3 @@
+Option 3 – Local LLM on your GPU (advanced)
+Run a local model via something like llama.cpp, Ollama, or HuggingFace with CUDA.
+analyze.py calls your local server for analysis

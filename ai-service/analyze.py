@@ -2,7 +2,10 @@ import argparse
 import json
 import os
 import re
-from typing import Dict, List, Tuple
+from typing import Dict, List
+
+import torch
+from sentence_transformers import SentenceTransformer, util
 
 
 def load_resume_text(path: str) -> str:
@@ -73,9 +76,16 @@ def compute_scores(resume_text: str, jd_text: str) -> Dict:
   resume_set = set(resume_tokens)
   jd_set = set(jd_tokens)
 
-  overlap = len(resume_set & jd_set)
-  union = len(resume_set | jd_set)
-  semantic_match = ratio(overlap, union) * 100
+  # ----- Semantic similarity using sentence-transformers (GPU if available) -----
+  device = "cuda" if torch.cuda.is_available() else "cpu"
+  model = SentenceTransformer("all-MiniLM-L6-v2", device=device)
+
+  with torch.no_grad():
+    emb_resume = model.encode(resume_text, convert_to_tensor=True, device=device)
+    emb_jd = model.encode(jd_text, convert_to_tensor=True, device=device)
+    cosine_sim = util.cos_sim(emb_resume, emb_jd).item()
+
+  semantic_match = max(0.0, min(1.0, cosine_sim)) * 100
 
   resume_skills = set(extract_skill_tokens(resume_tokens))
   jd_skills = set(extract_skill_tokens(jd_tokens))
