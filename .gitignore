@@ -1,0 +1,47 @@
+# Root gitignore for Resume Scorer monorepo
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Next.js / build outputs
+.next/
+.vercel/
+out/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Python / ai-service
+ai-service/.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Uploads and temp files
+backend/uploads/
+tmp/
+
