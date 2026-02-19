@@ -1,11 +1,17 @@
 import argparse
 import json
+import logging
 import os
 import re
 from typing import Dict, List
 
 import torch
 from sentence_transformers import SentenceTransformer, util
+from local_llm import get_llm_client
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def load_resume_text(path: str) -> str:
@@ -69,7 +75,7 @@ def ratio(numerator: float, denominator: float) -> float:
   return max(0.0, min(1.0, numerator / denominator))
 
 
-def compute_scores(resume_text: str, jd_text: str) -> Dict:
+def compute_scores(resume_text: str, jd_text: str, use_llm: bool = True) -> Dict:
   resume_tokens = tokenize(resume_text)
   jd_tokens = tokenize(jd_text)
 
@@ -175,14 +181,41 @@ def compute_scores(resume_text: str, jd_text: str) -> Dict:
       "Tailor your summary and bullet points to mirror the language of the job description."
     )
 
-  if not strengths:
-    strengths.append("Good foundation; can be improved with more targeted tailoring.")
   if not recommendations:
     recommendations.append(
       "Your resume already aligns well. Consider minor polishing for clarity and impact."
     )
 
-  return {
+  # ----- Enhanced analysis with local LLM -----
+  llm_analysis = None
+  if use_llm:
+    try:
+      llm_client = get_llm_client()
+      if llm_client:
+        logger.info("Generating enhanced analysis with local LLM...")
+        llm_result = llm_client.generate_analysis(resume_text, jd_text)
+        if llm_result and "llm_analysis" in llm_result:
+          llm_analysis = llm_result["llm_analysis"]
+          # Enhance recommendations with LLM insights
+          if "improvement_areas" in llm_analysis:
+            recommendations.extend(llm_analysis["improvement_areas"])
+          if "key_strengths" in llm_analysis:
+            strengths.extend(llm_analysis["key_strengths"])
+          
+          # Adjust overall score based on LLM recommendation
+          if "recommendation_score" in llm_analysis:
+            llm_score = llm_analysis["recommendation_score"]
+            overall = 0.7 * overall + 0.3 * llm_score
+          
+          logger.info("LLM analysis completed successfully")
+        else:
+          logger.warning("LLM analysis failed, using traditional scoring only")
+      else:
+        logger.info("No LLM server available, using traditional scoring")
+    except Exception as e:
+      logger.error(f"Error in LLM analysis: {e}")
+
+  result = {
     "overallMatch": round(overall, 1),
     "semanticMatch": round(semantic_match, 1),
     "skillsMatch": round(skills_match, 1),
@@ -194,12 +227,22 @@ def compute_scores(resume_text: str, jd_text: str) -> Dict:
     "recommendations": recommendations,
     "strengths": strengths,
   }
+  
+  # Add LLM analysis if available
+  if llm_analysis:
+    result["llmAnalysis"] = llm_analysis
+    result["analysisMethod"] = "enhanced_llm"
+  else:
+    result["analysisMethod"] = "traditional"
+
+  return result
 
 
 def main() -> None:
   parser = argparse.ArgumentParser(description="Resume vs JD analysis")
   parser.add_argument("--resume", required=True, help="Path to resume file")
   parser.add_argument("--jd", required=True, help="Job description text")
+  parser.add_argument("--no-llm", action="store_true", help="Disable LLM enhancement")
   args = parser.parse_args()
 
   if not os.path.exists(args.resume):
@@ -209,7 +252,8 @@ def main() -> None:
   resume_text = load_resume_text(args.resume)
   jd_text = args.jd
 
-  result = compute_scores(resume_text, jd_text)
+  use_llm = not args.no_llm
+  result = compute_scores(resume_text, jd_text, use_llm=use_llm)
   print(json.dumps(result))
 
 

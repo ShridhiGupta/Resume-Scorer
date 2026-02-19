@@ -1,0 +1,52 @@
+Shridhi Gupta
++91 63985 40120 — guptashridhi11@gmail.com — LinkedIn — GitHub
+
+PROFILE SUMMARY
+AI Engineer specializing in building LLM-powered applications with structured prompting, workflow automation, and API integration. Experienced in designing prompt strategies, tool-based AI workflows, and scalable backend integrations using Python and JavaScript. Focused on reliable AI usage, response structuring, and real-world deployment.
+
+WORK EXPERIENCE
+Software Automation Engineer
+Botpresso (Remote)
+January 2026- February 2026
+• Designed AI-powered automation workflows integrating LLM APIs with backend services for task execution and data processing.
+• Built structured prompt pipelines to standardize LLM responses for downstream automation tasks.
+• Integrated API-based inference systems into automation pipelines to improve execution reliability.
+• Implemented validation layers to reduce inconsistent outputs in LLM-assisted workflows.
+• Optimized workflow efficiency by refining API calls and reducing redundant processing steps.
+
+TECHNICAL SKILLS
+LLM & Prompt Engineering: Structured Prompting, Task Decomposition, Output Formatting, AI Tool Usage
+Automation & AI Workflows: n8n, API Integrations, Webhooks, Workflow Orchestration
+Programming: Python, JavaScript, Java
+Backend & APIs: REST APIs, Node.js, Basic FastAPI Knowledge
+Databases: MongoDB, Google Sheets API, Postgres, SQL
+Core CS: Data Structures, Algorithms, Problem Solving, System Design
+
+PROJECTS
+DSA Flow – Algorithmic Explainability Platform
+• Developed interactive data structures and algorithms learning platform with real-time visualizations, serving users.
+• Implemented algorithm animations, including sorting algorithms, binary search trees, graph traversal, and dynamic programming, using JavaScript.
+• Built full-stack web application with React frontend, Node.js backend, MongoDB database.
+
+AI-Powered Stock Data Automation – n8n Workflow
+• Designed automated pipeline to fetch and process stock data (NIFTY50, TCS, INFY, RELIANCE) using public APIs.
+• Integrated HTTP requests, cron scheduling, and code nodes to transform and clean structured financial data.
+• Implemented automated reporting with email notifications and Google Sheets storage.
+• Reduced manual monitoring effort by fully automating end-to-end data collection and reporting workflow.
+
+EDUCATION
+Teerthanker Mahaveer University
+Moradabad, Uttar Pradesh, India
+B.Tech Computer Science and Engineering (spec. AI, ML & DL) — CGPA: 9.34/10 Expected Graduation: July 2027
+
+Shri Dal Chand Sharma Inter College — Percentage: 90%
+Rampur, Uttar Pradesh, India
+Higher Secondary Education
+
+CERTIFICATIONS & ACHIEVEMENTS
+• Python Training – IIT Bombay (Dec 2024)
+• Java Training – IIT Bombay (May 2025)
+• Introduction to Machine Learning – NPTEL (IIT Kharagpur)
+• Solved 400+ coding problems (200+ on LeetCode)
+• Intro to Machine Learning in NPTEL IIT Kharagpur – September 2025
+• Mentored juniors in DSA and Java.
