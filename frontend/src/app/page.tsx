@@ -25,10 +25,6 @@ export default function Home() {
           >
             Start Analyzing Now
           </a>
-          <span className="text-xs text-slate-500">
-            Built by <span className="font-semibold">Shridhi Gupta</span> using
-            Next.js, Node.js &amp; Python.
-          </span>
         </div>
       </section>
 
